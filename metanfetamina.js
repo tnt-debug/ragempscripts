@@ -17,7 +17,7 @@ mp.events.add("playerCommand", (command) => {
             // mp.events.call("fabricarmeta");
 
         // }else{
-            mp.gui.chat.push("!{255,0,0} Ya estás fabricando meta!");
+         //   mp.gui.chat.push("!{255,0,0} Ya estás fabricando meta!");
         //  }
     
     }
@@ -27,11 +27,6 @@ mp.events.add("playerCommand", (command) => {
 
     }
 
-});
-
-
-mp.events.add('render', () => {
-    
 });
 
 
@@ -86,7 +81,7 @@ function comenzarFabricarMeta(primerpaso){
  
     if(fosforo == true | alcohol == true | efedrina == true){
 
-        mp.gui.chat.push("Reunes todos los ingredientes en la mesa y comienzas a cocinar metanfetamina");
+        mp.gui.chat.push("!{255, 0, 0} Reunes todos los ingredientes en la mesa y comienzas a cocinar metanfetamina");
 
         efPos = new mp.Vector3(1011.9, -3193.8, -39.127246);
         
@@ -131,6 +126,9 @@ function mezclar(comp1, comp2){
 
         mp.gui.chat.push("!{255, 255, 0}Comienzas a disolver la Efedrina en el Alcohol...");
 
+        mp.game.streaming.requestAnimDict("random@shop_robbery");
+        mp.players.local.taskPlayAnim("random@shop_robbery", "robbery_action_f", 8.0, 1.0, -1, 1, 1.0, false, false, false);
+
             setTimeout(() => {
 
                 bowlPos = new mp.Vector3(1011.8, -3194.38, -39.127246);
@@ -145,9 +143,30 @@ function mezclar(comp1, comp2){
     
                 }, 6000);
 
+                mp.players.local.stopAnim("random@shop_robbery", "robbery_action_f", 1);
+
     }else{
         if(comp1.toUpperCase() === "FOSFORO" && comp2.toUpperCase() === "ALCOHOL"){
-            mp.gui.chat.push("!{255, 255, 0}Consigues una mezcla granate...");
+
+            mp.game.streaming.requestAnimDict("anim@amb@business@meth@meth_monitoring_cooking@cooking@");
+            mp.players.local.taskPlayAnim("anim@amb@business@meth@meth_monitoring_cooking@cooking@", "look_around_cooker", 8.0, 1.0, -1, 1, 1.0, false, false, false);
+
+            setTimeout(() => {
+
+                bowl2Pos = new mp.Vector3(1011.8, -3194.38, -39.127246);
+                let bowl2 = mp.objects.new(4086586163, bowl2Pos, {
+                    rotation: new mp.Vector3(0, 0, 0),
+                    alpha: 255,
+                    dimension: mp.players.local.dimension
+                    }); 
+
+                //mp.players.local.playAnim("look_around_cooker", mp.players.local.handle, 2, true, true, true, 255, 1);
+               
+
+                mp.gui.chat.push("!{255, 255, 0}Consigues una mezcla granate...");
+                segundamezcla = true;
+            }, 6000)
+           
         }else{
             mp.game.fire.addSpecfxExplosion(mp.players.local.position.x, mp.players.local.position.y, mp.players.local.position.z, 28, 5, 4, true, false, 5);
         }
